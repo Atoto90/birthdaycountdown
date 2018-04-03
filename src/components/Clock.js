@@ -34,8 +34,19 @@ class Clock extends Component {
         }
     }
 
+    getAge = function() {
+        var bday = new Date(this.birthday);
+        let today = new Date();
+
+        var distance = today.getTime() - bday.getTime();
+        var daysOld = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var yearsOld = Number((daysOld/365).toFixed());
+
+        return yearsOld
+    }.bind(this);
+
     componentDidMount() {
-        
+
             this.timer = setInterval(() => {
                 const timeRemaining = this.getTimeRemaining(this.birthday)
                 this.setState({ timeRemaining : timeRemaining })
@@ -47,10 +58,15 @@ class Clock extends Component {
 
         return (
             <div>
-                <div>DAYS {data.days}</div>
-                <div>HRS {data.hours}</div>
-                <div>MINS {data.minutes}</div>
-                <div>SECS {data.seconds}</div>
+                <div>
+                    <div>DAYS {data.days}</div>
+                    <div>HRS {data.hours}</div>
+                    <div>MINS {data.minutes}</div>
+                    <div>SECS {data.seconds}</div>
+                </div>
+                <div>
+                    {<h4>remanining until you are {this.getAge()}</h4>}
+                </div>
             </div>
         )
     }
